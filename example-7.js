@@ -2,13 +2,59 @@ import {cleanConsole, createAll} from './data';
 
 const companies = createAll();
 
+const example7Part1 = ( id ) => {
+  return companies[id].name;
+};
+
+const example7Part2 = ( id ) => {
+  companies.splice( id, 1 );
+  return companies;
+};
+
+const example7Part3 = ( id ) => {
+  const PATH = companies[id];
+  const company = {
+    name: PATH.name,
+    id: PATH.id,
+    isOpen: PATH.isOpen,
+    usersLength: PATH.usersLength,
+  };
+  return company;
+};
+
+const example7Part4 = ( id ) => {
+  const user = {
+    id: companies[id].users.length,
+    firstName: 'Juan',
+    lastName: 'Delgado',
+    age: 35,
+    car: true,
+  };
+  Object.assign( companies[id].users, {[companies[id].users.length]: user} );
+  companies[id].usersLength = companies[id].users.length;
+  return companies[id];
+};
+
+const example7Part5 = ( id, name, isOpen ) => {
+  companies[id].name = name;
+  companies[id].isOpen = isOpen;
+  return companies[id];
+};
+
+const example7Part6 = ( idCompany, idUser ) => {
+  console.log( 'Ante de eliminar un usuario: ', companies[idCompany].users[idUser] );
+  companies.splice( companies[idCompany].users[idUser].id, 2 );
+  companies[idCompany].usersLength = companies[idCompany].users.length;
+  return companies;
+};
+
 cleanConsole(7, companies);
-console.log('---- EXAMPLE 7 part 1 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 2 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 3 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 4 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 5 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 6 --- ', 'Put here your function');
+console.log('---- EXAMPLE 7 part 1 --- ', example7Part1( companies[0].id ) );
+console.log('---- EXAMPLE 7 part 2 --- ', example7Part2( companies[2].id ) );
+console.log('---- EXAMPLE 7 part 3 --- ', example7Part3( companies[3].id ) );
+console.log('---- EXAMPLE 7 part 4 --- ', example7Part4( companies[5].id ) );
+console.log('---- EXAMPLE 7 part 5 --- ', example7Part5( companies[5].id, 'Gucci', true ) );
+console.log('---- EXAMPLE 7 part 6 --- ', example7Part6( companies[1].id, companies[1].users[0].id ) );
 console.log('---- EXAMPLE 7 part 7 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 8 --- ', 'Put here your function');
 console.log('---- EXAMPLE 7 part 9 --- ', 'Put here your function');
