@@ -2,8 +2,21 @@ import {cleanConsole, createAll} from './data';
 
 const companies = createAll();
 
+const example6 = ( companies ) => {
+  const userObj = {};
+  for ( const companie of companies ) {
+    for ( const user of companie.users ) {
+      const user1 = {
+        [`${ user.firstName }${ user.lastName }${ user.age }`]: user.car,
+      };
+      Object.assign( userObj, user1 );
+    };
+  };
+  return userObj;
+};
+
 cleanConsole(6, companies);
-console.log('---- EXAMPLE 6 --- ', 'Put here your function');
+console.log('---- Completed skill - EXAMPLE 6 --- ', example6( companies ) );
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
