@@ -7,8 +7,14 @@ const example7Part1 = ( id ) => {
 };
 
 const example7Part2 = ( id ) => {
-  companies.splice( id, 1 );
-  return companies;
+  let nameCompany;
+  for ( const [index, companie] of companies.entries() ) {
+    if ( companie.id === id ) {
+      nameCompany = companie.name;
+      companies.splice( index, 1 );
+    };
+  };
+  return `La compañia ${ nameCompany } se ha eliminado exitosamente...`;
 };
 
 const example7Part3 = ( id ) => {
@@ -36,28 +42,113 @@ const example7Part4 = ( id ) => {
 };
 
 const example7Part5 = ( id, name, isOpen ) => {
-  companies[id].name = name;
-  companies[id].isOpen = isOpen;
-  return companies[id];
-};
-
-const example7Part6 = ( idCompany, idUser ) => {
-  console.log( 'Ante de eliminar un usuario: ', companies[idCompany].users[idUser] );
-  companies.splice( companies[idCompany].users[idUser].id, 2 );
-  companies[idCompany].usersLength = companies[idCompany].users.length;
+  for ( const companie of companies ) {
+    if ( companie.id === id ) {
+      companie.name = name;
+      companie.isOpen = isOpen;
+    };
+  };
   return companies;
 };
 
+const example7Part6 = ( idCompanie, idUser ) => {
+  let userName;
+  let nameCompany;
+  let indexCompany;
+  for ( const [index, companie] of companies.entries() ) {
+    if ( companie.id === idCompanie ) {
+      indexCompany = index;
+      nameCompany = companie.name;
+      for ( const [i, user] of companie.users.entries() ) {
+        if ( user.id === idUser ) {
+          console.log( 'Usuario a eliminar: ', user );
+          userName = `${user.firstName} ${ user.lastName }`;
+          const userSplice = companies[indexCompany].users;
+          userSplice.splice( i, 1 );
+        };
+      };
+    };
+  };
+  return `El usuario ${ userName } de la empresa ${ nameCompany } se ha eliminado correctamente`;
+};
+
+const example7Part7 = ( idCompanie, idUser ) => {
+  for ( const [index, companie] of companies.entries() ) {
+    if ( companies[index].id === idCompanie ) {
+      for ( const user of companie.users ) {
+        if ( user.id === idUser ) {
+          console.log(`Datos del usuario ${ user.firstName } ${ user.lastName } de la empresa ${ companie.name }`);
+          return user;
+        };
+      };
+    };
+  };
+};
+
+const user = {
+  firstName: 'Carlos',
+  age: 26,
+  car: false,
+  lastName: 'Molero',
+};
+
+const example7Part8 = ( idCompanie, idUser, userM ) => {
+  for ( const [index, companie] of companies.entries() ) {
+    if ( companies[index].id === idCompanie ) {
+      for ( const user of companie.users ) {
+        if ( user.id === idUser ) {
+          console.log('Usuario a mdificar: ', user);
+          user.firstName = userM.firstName;
+          user.age = userM.age;
+          user.car = userM.car;
+          user.lastName = userM.lastName;
+          return user;
+        };
+      };
+    };
+  };
+};
+
+const example7Part9 = ( idCompanie, idCompanie1, idUser ) => {
+  let userM;
+  let indexCompany;
+  let company;
+  let company1;
+  for ( const [index, companie] of companies.entries() ) {
+    if ( companies[index].id === idCompanie ) {
+      indexCompany = index;
+      company = companie.name;
+      for ( const [i, user] of companie.users.entries() ) {
+        if ( user.id === idUser ) {
+          userM = user;
+          const userSplice = companies[indexCompany].users;
+          userSplice.splice( i, 1 );
+          companie.usersLength = companie.users.length;
+          console.log( 'Usuario a transferir: ', userM );
+        };
+      };
+    };
+    if ( companies[index].id === idCompanie1 ) {
+      company1 = companie.name;
+      userM.company = companie.name; // Cambio nombre de la compañia a transferir el usuario
+      userM.id = companie.users.length+1; // Se asigna nuevo id al usuario transferido
+      Object.assign( companie.users, {[companie.users.length]: userM} );
+    };
+  };
+  return `El usuario ${ userM.firstName } ${ userM.lastName } se ha transferido de: ${ company } a: ${ company1 }`;
+};
+
 cleanConsole(7, companies);
-console.log('---- EXAMPLE 7 part 1 --- ', example7Part1( companies[0].id ) );
-console.log('---- EXAMPLE 7 part 2 --- ', example7Part2( companies[2].id ) );
-console.log('---- EXAMPLE 7 part 3 --- ', example7Part3( companies[3].id ) );
-console.log('---- EXAMPLE 7 part 4 --- ', example7Part4( companies[5].id ) );
-console.log('---- EXAMPLE 7 part 5 --- ', example7Part5( companies[5].id, 'Gucci', true ) );
-console.log('---- EXAMPLE 7 part 6 --- ', example7Part6( companies[1].id, companies[1].users[0].id ) );
-console.log('---- EXAMPLE 7 part 7 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 8 --- ', 'Put here your function');
-console.log('---- EXAMPLE 7 part 9 --- ', 'Put here your function');
+console.log('----Completed Skill-EXAMPLE 7 part 1---', example7Part1( companies[0].id ) );
+console.log('----Completed Skill-EXAMPLE 7 part 2---', example7Part2( companies[2].id ) );
+console.log('----Completed Skill-EXAMPLE 7 part 3---', example7Part3( companies[3].id ) );
+console.log('----Completed Skill-EXAMPLE 7 part 4---', example7Part4( companies[5].id ) );
+console.log('----Completed Skill-EXAMPLE 7 part 5---', example7Part5( companies[4].id, 'Gucci', true ) );
+console.log('----Completed Skill-EXAMPLE 7 part 6---', example7Part6( companies[5].id, companies[5].users[2].id ) );
+console.log('----Completed Skill-EXAMPLE 7 part 7---', example7Part7( companies[6].id, companies[6].users[4].id ) );
+console.log('--Completed Skill-EXAMPLE 7 part 8--', example7Part8( companies[6].id, companies[6].users[4].id, user ) );
+console.log('---CS - EXAMPLE 7 part 9---', example7Part9( companies[0].id, companies[5].id, companies[0].users[4].id ));
+console.log( 'Compañias modificadas en su totalidad: ', companies );
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
